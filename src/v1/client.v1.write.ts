@@ -416,6 +416,15 @@ export default class TwitterApiv1ReadWrite extends TwitterApiv1ReadOnly {
         // Await for given seconds
         await sleepSecs(processing_info.check_after_secs);
       }
+      
+
+      if (processing_info.error && processing_info.error.code == 3) {
+        throw new Error('Incompatible Video file Detected, maybe don`t upload the same video over and over again?')
+      }
+
+      if (processing_info.error) {
+        throw new Error('unknown error detected')
+      }
       else {
         // No info; Await for 5 seconds
         await sleepSecs(5);
