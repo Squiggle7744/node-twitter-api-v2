@@ -31,6 +31,7 @@ import {
 } from '../types';
 import TwitterApiv1ReadOnly from './client.v1.read';
 import { TFileHandle, getFileHandle, getFileSizeFromFileHandle, getMediaCategoryByMime, getMimeType, readFileIntoBuffer, readNextPartOf, sleepSecs } from './media-helpers.v1';
+import { error } from 'console';
 
 const UPLOAD_ENDPOINT = 'media/upload.json';
 
@@ -380,7 +381,11 @@ export default class TwitterApiv1ReadWrite extends TwitterApiv1ReadOnly {
 
       // Video is ready, return media_id
       return fullMediaData.media_id_string;
-    } finally {
+    } catch (e) {
+      console.error(e)
+    }
+    
+    finally {
       // Close file if any
       if (typeof file === 'number') {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
